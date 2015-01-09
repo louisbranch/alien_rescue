@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/PlayerMovement.cs">
     <Files>
-      <File FileName="Assets/scripts/PlayerMovement.cs" Line="29" Column="19" />
+      <File FileName="Assets/scripts/PlayerMovement.cs" Line="6" Column="32" />
       <File FileName="../bender/Assets/Scripts/Player/PlayerMovement.cs" Line="8" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

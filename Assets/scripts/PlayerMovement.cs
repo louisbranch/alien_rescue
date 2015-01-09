@@ -3,26 +3,19 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 	
-	public float movementSpeed = 3.0f;
+	public float speed = 3.0f;
+	private bool isGrounded = true;
 
 	private void Update () {
-		Vector3 scale = transform.localScale;
-		Vector3 pos = transform.position;
-
-		float speed = Time.deltaTime * movementSpeed;
 		
 		if (Input.GetKey(KeyCode.LeftArrow)) {
-			scale.x = -1;
-			pos.x -= speed;
-			transform.localScale = scale;
-			transform.position = pos;
+			transform.Translate(Vector3.right * speed * Time.deltaTime); 
+			transform.eulerAngles = new Vector2(0, 180);
 		} 
 		
 		if (Input.GetKey(KeyCode.RightArrow)) {
-			scale.x = 1;
-			pos.x += speed;
-			transform.localScale = scale;
-			transform.position = pos;
+			transform.Translate(Vector3.right * speed * Time.deltaTime); 
+			transform.eulerAngles = new Vector2(0, 0);
 		} 
 		
 		if (Input.GetKeyDown(KeyCode.UpArrow)) {
@@ -32,6 +25,14 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.DownArrow)) {
 			//TODO
 		}
+
+		if (Input.GetKeyDown (KeyCode.Space) && isGrounded) {
+			rigidbody2D.AddForce(transform.up * 200f);
+		}
+	}
+
+	private void FixedUpdate () {
+		//TODO check for grounded
 	}
 
 }
