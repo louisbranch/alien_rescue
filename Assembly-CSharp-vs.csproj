@@ -46,9 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\scripts\PlayerMovement.cs" />
-     <Compile Include="Assets\scripts\SplashScreen.cs" />
-     <Compile Include="Assets\scripts\ui\MenuOptions.cs" />
+     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\SplashScreen.cs" />
+     <Compile Include="Assets\Scripts\ui\MenuOptions.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
