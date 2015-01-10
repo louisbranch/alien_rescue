@@ -1,12 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerMovement.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerControl.cs">
     <Files>
-      <File FileName="../2dplatformer/Assets/Scripts/PlayerControl.cs" Line="26" Column="1" />
-      <File FileName="../2dplatformer/Assets/Scripts/Pauser.cs" Line="1" Column="1" />
-      <File FileName="../2dplatformer/Assets/Scripts/Enemy.cs" Line="1" Column="1" />
       <File FileName="../mv.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="11" Column="18" />
+      <File FileName="Assets/Scripts/PlayerControl.cs" Line="4" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
