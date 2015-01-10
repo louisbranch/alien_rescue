@@ -4,53 +4,61 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 	
 	public float hSpeed = 5f;
-	public float vForce = 400f;
+	public float vSpeed = 3f;
+	public float jumpForce = 400f;
 
 	private bool isFacingRight = true;
 	private bool isGrounded = false;
-	private bool isClimbing = false;
 
-	public Transform groundChecker;
-	public float groundedRadius = 0.2f;
+	public Transform movementChecker;
+	public float checkerRadius = 0.2f;
 	public LayerMask groundLayer;
+	public LayerMask laddersLayer;
+
+	private int PlayerLayerID;
+	private int PlatformLayerID;
 
 	Animator anim;
 
 	private void Awake () {
 		anim = GetComponent<Animator>();
+		PlayerLayerID = LayerMask.NameToLayer("Player");
+		PlatformLayerID = LayerMask.NameToLayer("Ground");
 	}
 
 	private void Update () {
 
-		isGrounded = Physics2D.OverlapCircle(groundChecker.position, groundedRadius, groundLayer);
-		anim.SetBool("Grounded", isGrounded);
+		isGrounded = Physics2D.OverlapCircle(movementChecker.position, checkerRadius, groundLayer);
 
 		if (Input.GetKeyDown(KeyCode.Space) && isGrounded) {
-			anim.SetBool("Grounded", false);
-			anim.SetFloat("VSpeed", rigidbody2D.velocity.y);
-			rigidbody2D.AddForce(new Vector2(0, vForce));
+			isGrounded = false;
+			rigidbody2D.AddForce(new Vector2(0, jumpForce));
 		}
 
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			Application.LoadLevel("Menu");
 		}
+		
+		anim.SetBool("Grounded", isGrounded);
 
 	}
 
 	private void FixedUpdate () {
 
-		if (isGrounded) {
-			float move = Input.GetAxis("Horizontal");
+		float hMove = Input.GetAxis("Horizontal");
+		//float vMove = Input.GetAxis("Vertical");
+
+	 	if (isGrounded) {
+
+			rigidbody2D.velocity = new Vector2(hMove * hSpeed, rigidbody2D.velocity.y);
+			anim.SetFloat("HSpeed", Mathf.Abs(hMove));
 			
-			rigidbody2D.velocity = new Vector2(move * hSpeed, rigidbody2D.velocity.y);
-			
-			anim.SetFloat("HSpeed", Mathf.Abs(move));
-			
-			if (move > 0 && !isFacingRight) {
+			if (hMove > 0 && !isFacingRight) {
 				Flip ();
-			} else if (move < 0 && isFacingRight) {
+			} else if (hMove < 0 && isFacingRight) {
 				Flip ();
 			}
+				
 		}
 
 	}
@@ -60,6 +68,17 @@ public class PlayerMovement : MonoBehaviour {
 		Vector3 scale = transform.localScale;
 		scale.x *= -1;
 		transform.localScale = scale;
+	}
+
+	private void StartClimb (float vMove) {
+		rigidbody2D.gravityScale = 0;
+		rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, vMove * vSpeed);
+		anim.SetFloat("VSpeed", Mathf.Abs(vMove));
+	}
+
+	private void StopClimb (float vMove) {
+		rigidbody2D.gravityScale = 1;
+		anim.SetFloat("VSpeed", Mathf.Abs(vMove));
 	}
 
 }
