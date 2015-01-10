@@ -2,16 +2,17 @@
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
-	
+
 	public float hSpeed = 5f;
-	public float vSpeed = 3f;
+  	public float vSpeed = 3f;
 	public float jumpForce = 400f;
 
-	private bool isFacingRight = true;
-	private bool isGrounded = false;
+	private bool facingRight = true;
+	private bool grounded = false;
+  	private bool jump = false;
 
 	public Transform movementChecker;
-	public float checkerRadius = 0.2f;
+	public float checkerRadius = 0.1f;
 	public LayerMask groundLayer;
 	public LayerMask laddersLayer;
 
@@ -28,38 +29,42 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void Update () {
 
-		isGrounded = Physics2D.OverlapCircle(movementChecker.position, checkerRadius, groundLayer);
+		grounded = Physics2D.OverlapCircle(movementChecker.position, checkerRadius, groundLayer);
 
-		if (Input.GetKeyDown(KeyCode.Space) && isGrounded) {
-			isGrounded = false;
-			rigidbody2D.AddForce(new Vector2(0, jumpForce));
+		anim.SetBool("Grounded", grounded);
+
+		if (Input.GetKeyDown(KeyCode.Space) && grounded) {
+			jump = true;
 		}
 
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			Application.LoadLevel("Menu");
 		}
-		
-		anim.SetBool("Grounded", isGrounded);
 
 	}
 
 	private void FixedUpdate () {
 
 		float hMove = Input.GetAxis("Horizontal");
-		//float vMove = Input.GetAxis("Vertical");
+		float vMove = Input.GetAxis("Vertical");
 
-	 	if (isGrounded) {
-
+		if (grounded) {
 			rigidbody2D.velocity = new Vector2(hMove * hSpeed, rigidbody2D.velocity.y);
 			anim.SetFloat("HSpeed", Mathf.Abs(hMove));
-			
-			if (hMove > 0 && !isFacingRight) {
+
+			if (hMove > 0 && !facingRight) {
 				Flip ();
-			} else if (hMove < 0 && isFacingRight) {
+			} else if (hMove < 0 && facingRight) {
 				Flip ();
 			}
-				
 		}
+
+		
+		if (jump) {
+			anim.SetBool("Grounded", false);
+			rigidbody2D.AddForce(new Vector2(0, jumpForce));
+			jump = false;
+		} 	
 
 	}
 
@@ -71,25 +76,15 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void Flip () {
-		isFacingRight = !isFacingRight;
+		facingRight = !facingRight;
 		Vector3 scale = transform.localScale;
 		scale.x *= -1;
 		transform.localScale = scale;
 	}
 
-	private void StartClimb (float vMove) {
-		rigidbody2D.gravityScale = 0;
-		rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, vMove * vSpeed);
-		anim.SetFloat("VSpeed", Mathf.Abs(vMove));
-	}
-
-	private void StopClimb (float vMove) {
-		rigidbody2D.gravityScale = 1;
-		anim.SetFloat("VSpeed", Mathf.Abs(vMove));
-	}
-
+  	//TODO move to other scripts
 	private void KillPlayer () {
-		anim.SetBool("IsDead", true);
+		anim.SetTrigger("Dead");
 		rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 5f);
 		foreach(Collider2D c in GetComponents<Collider2D> ()) {
 			c.enabled = false;
