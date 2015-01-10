@@ -30,6 +30,10 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Space) && isGrounded && !isClimbing) {
 			rigidbody2D.AddForce(transform.up * 200f);
 		}
+
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Application.LoadLevel("Menu");
+		}
 	}
 
 	private void FixedUpdate () {
