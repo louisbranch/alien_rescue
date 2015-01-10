@@ -63,6 +63,13 @@ public class PlayerMovement : MonoBehaviour {
 
 	}
 
+	void OnCollisionEnter2D(Collision2D coll){
+		string layer = LayerMask.LayerToName(coll.gameObject.layer);
+		if (layer == "Enemies") {
+			KillPlayer();
+		}
+	}
+
 	private void Flip () {
 		isFacingRight = !isFacingRight;
 		Vector3 scale = transform.localScale;
@@ -79,6 +86,14 @@ public class PlayerMovement : MonoBehaviour {
 	private void StopClimb (float vMove) {
 		rigidbody2D.gravityScale = 1;
 		anim.SetFloat("VSpeed", Mathf.Abs(vMove));
+	}
+
+	private void KillPlayer () {
+		anim.SetBool("IsDead", true);
+		rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 5f);
+		foreach(Collider2D c in GetComponents<Collider2D> ()) {
+			c.enabled = false;
+		}
 	}
 
 }
