@@ -7,7 +7,6 @@ public class BeeAI : MonoBehaviour {
 	public float chanceOfTurning = 0.3f;
 	
 	private bool facingRight = true;
-	private bool ready = false;
 	
 	private void Update () {	
 		if (facingRight) {
@@ -18,7 +17,7 @@ public class BeeAI : MonoBehaviour {
 	}
 
 	private void ChangeOrientation() {
-		if (ready && Random.value < chanceOfTurning) {
+		if (Random.value < chanceOfTurning) {
 			Transform2D.FlipX(gameObject);
 			facingRight = !facingRight;
 		}
@@ -26,12 +25,9 @@ public class BeeAI : MonoBehaviour {
 
 	private void OnCollisionEnter2D(Collision2D coll){
 		string name = coll.gameObject.name;
-		if (name == "ScreenLimit" || (name == "Pipe" && ready)) {
+		if (name == "ScreenLimit") {
 			Transform2D.FlipX(gameObject);
 			facingRight = !facingRight;
-		} else if (name == "Platform" && !ready) {
-			ready = true;
-			InvokeRepeating("ChangeOrientation", 2, 1.0f);
 		}
 	}
 
