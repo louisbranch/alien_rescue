@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour {
 
 		anim.SetBool("Grounded", grounded);
 
-		if (Input.GetKeyDown(KeyCode.Space) && grounded) {
+		if (Input.GetButtonDown("Jump") && grounded) {
 			jump = true;
 		}
 
