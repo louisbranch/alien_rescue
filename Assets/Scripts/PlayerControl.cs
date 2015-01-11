@@ -50,7 +50,6 @@ public class PlayerControl : MonoBehaviour {
 				facingRight = !facingRight;
 			}
 		}
-
 		
 		if (jump) {
 			anim.SetBool("Grounded", false);
@@ -71,9 +70,7 @@ public class PlayerControl : MonoBehaviour {
 	private void KillPlayer () {
 		anim.SetTrigger("Dead");
 		rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 5f);
-		foreach(Collider2D c in GetComponents<Collider2D> ()) {
-			c.enabled = false;
-		}
+		collider2D.enabled = false;
 		GameControl.LifeLost();
 	}
 
