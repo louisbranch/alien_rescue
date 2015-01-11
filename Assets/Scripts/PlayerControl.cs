@@ -37,10 +37,6 @@ public class PlayerControl : MonoBehaviour {
 			jump = true;
 		}
 
-		if (Input.GetKeyDown(KeyCode.Escape)) {
-			Application.LoadLevel("Menu");
-		}
-
 	}
 
 	private void FixedUpdate () {
