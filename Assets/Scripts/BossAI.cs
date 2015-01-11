@@ -3,12 +3,12 @@ using System.Collections;
 
 public class BossAI : MonoBehaviour {
 
-	public GameObject minion;
-	private GameObject spawnedMinion;
+	public GameObject enemy;
+	private GameObject clone;
 	private bool facingRight = true;
 	public float speed = 1.0f;
 	
-	void Update () {
+	private void Update () {
 
 		if (facingRight) {
 			transform.Translate (Vector2.right * speed * Time.deltaTime);
@@ -21,25 +21,21 @@ public class BossAI : MonoBehaviour {
 	private void OnCollisionEnter2D(Collision2D coll){
 		string name = coll.gameObject.name;
 		if (name == "Boxes") {
-			Flip();
+			Transform2D.FlipX(gameObject);
+			facingRight = !facingRight;
 		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D coll){
 		string name = coll.gameObject.name;
 		if (name == "Ladder") {
-			Flip();
+			Transform2D.FlipX(gameObject);
+			facingRight = !facingRight;
 
 			Vector3 newPosition = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z); 
-			spawnedMinion = (GameObject)Instantiate(minion, newPosition, Quaternion.identity);
-			spawnedMinion.rigidbody2D.AddForce(new Vector2(400f, 0));
+			clone = (GameObject)Instantiate(enemy, newPosition, Quaternion.identity);
+			clone.name = enemy.name;
+			clone.rigidbody2D.AddForce(new Vector2(200f, 0));
 		}
-	}
-
-	private void Flip () {
-		facingRight = !facingRight;
-		Vector3 scale = transform.localScale;
-		scale.x *= -1;
-		transform.localScale = scale;
 	}
 }

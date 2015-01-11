@@ -53,9 +53,11 @@ public class PlayerControl : MonoBehaviour {
 			anim.SetFloat("HSpeed", Mathf.Abs(hMove));
 
 			if (hMove > 0 && !facingRight) {
-				Flip ();
+				Transform2D.FlipX(gameObject);
+				facingRight = !facingRight;
 			} else if (hMove < 0 && facingRight) {
-				Flip ();
+				Transform2D.FlipX(gameObject);
+				facingRight = !facingRight;
 			}
 		}
 
@@ -73,13 +75,6 @@ public class PlayerControl : MonoBehaviour {
 		if (layer == "Enemies") {
 			KillPlayer();
 		}
-	}
-
-	private void Flip () {
-		facingRight = !facingRight;
-		Vector3 scale = transform.localScale;
-		scale.x *= -1;
-		transform.localScale = scale;
 	}
 
   	//TODO move to other scripts

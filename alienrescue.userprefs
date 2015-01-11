@@ -1,9 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/BossAI.cs">
     <Files>
-      <File FileName="../mv.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PlayerControl.cs" Line="4" Column="27" />
+      <File FileName="Assets/Scripts/PlayerControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/BossAI.cs" Line="19" Column="3" />
+      <File FileName="Assets/Scripts/EnemySpawner.cs" Line="13" Column="79" />
+      <File FileName="Assets/Scripts/BeeAI.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
