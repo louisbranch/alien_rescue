@@ -14,17 +14,11 @@ public class PlayerControl : MonoBehaviour {
 	public Transform movementChecker;
 	public float checkerRadius = 0.1f;
 	public LayerMask groundLayer;
-	public LayerMask laddersLayer;
-
-	private int PlayerLayerID;
-	private int PlatformLayerID;
 
 	Animator anim;
 
 	private void Awake () {
 		anim = GetComponent<Animator>();
-		PlayerLayerID = LayerMask.NameToLayer("Player");
-		PlatformLayerID = LayerMask.NameToLayer("Ground");
 	}
 
 	private void Update () {
@@ -42,7 +36,7 @@ public class PlayerControl : MonoBehaviour {
 	private void FixedUpdate () {
 
 		float hMove = Input.GetAxis("Horizontal");
-		float vMove = Input.GetAxis("Vertical");
+		//float vMove = Input.GetAxis("Vertical");
 
 		if (grounded) {
 			rigidbody2D.velocity = new Vector2(hMove * hSpeed, rigidbody2D.velocity.y);
@@ -66,20 +60,21 @@ public class PlayerControl : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter2D(Collision2D coll){
+	private void OnCollisionEnter2D(Collision2D coll){
 		string layer = LayerMask.LayerToName(coll.gameObject.layer);
 		if (layer == "Enemies") {
 			KillPlayer();
 		}
 	}
 
-  	//TODO move to other scripts
+  	//TODO move to other script
 	private void KillPlayer () {
 		anim.SetTrigger("Dead");
 		rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 5f);
 		foreach(Collider2D c in GetComponents<Collider2D> ()) {
 			c.enabled = false;
 		}
+		GameControl.LifeLost();
 	}
 
 }
