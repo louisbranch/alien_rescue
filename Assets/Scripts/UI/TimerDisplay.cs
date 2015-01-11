@@ -6,19 +6,17 @@ public class TimerDisplay : MonoBehaviour {
 
 	private int start = 5000;
 	private float counter;
-	public GameObject gameObj;
-	private Text txt;
+	private Text gui;
 
 	private void Start() {
 		counter = Time.time;
-		txt = GetComponent<Text>();
+		gui = GetComponent<Text>();
 	}
-
-	// Update is called once per frame
-	void Update () {
+	
+	private void Update () {
 		if ((Time.time - counter) > 1f) {
 			start -= 100;
-			txt.text = start.ToString();
+			gui.text = start.ToString();
 			counter = Time.time;
 		}
 
