@@ -3,9 +3,10 @@ using System.Collections;
 
 public class GameControl : MonoBehaviour {
 
+	private static int lives = 3;
 	private static bool paused = false;
 	private static bool won = false;
-	private static int lives = 3;
+	private static int currentLives = lives;
 
 	void Start () {
 		Screen.showCursor = false; 
@@ -39,10 +40,18 @@ public class GameControl : MonoBehaviour {
 		Screen.showCursor = true; 
 	}
 
+	public static int TotalLives() {
+		return lives;
+	}
+
+	public static int CurrentLives() {
+		return currentLives;
+	}
+
 	public static void LifeLost() {
-		--lives;
-		if (lives == 0) {
-			lives = 3;  // reset number of lives
+		--currentLives;
+		if (currentLives == 0) {
+			currentLives = lives;  // reset number of lives
 			Application.LoadLevel("GameOver");
 			Screen.showCursor = true; 
 		} else {

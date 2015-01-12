@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\Transform2D.cs" />
      <Compile Include="Assets\Scripts\UI\GameControl.cs" />
      <Compile Include="Assets\Scripts\UI\HighScoresDisplay.cs" />
+     <Compile Include="Assets\Scripts\UI\LivesDisplay.cs" />
      <Compile Include="Assets\Scripts\UI\MenuOptions.cs" />
      <Compile Include="Assets\Scripts\UI\SplashScreen.cs" />
      <Compile Include="Assets\Scripts\UI\TimerDisplay.cs" />
