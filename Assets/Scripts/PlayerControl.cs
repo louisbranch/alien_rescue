@@ -7,11 +7,13 @@ public class PlayerControl : MonoBehaviour {
   	public float vSpeed = 3f;
 	public float jumpForce = 400f;
 
+	public GameObject sword;
+
 	private bool facingRight = true;
 	private bool grounded = false;
-
   	private bool jump = false;
 	private bool atLadder = false;
+	private bool holdingSword = false;
 
 	public Transform movementChecker;
 	public float checkerRadius = 0.1f;
@@ -31,11 +33,11 @@ public class PlayerControl : MonoBehaviour {
 
 		anim.SetBool("Grounded", grounded);
 
-		if (Input.GetButtonDown("Jump") && grounded) {
+		if (Input.GetButtonDown("Jump") && grounded && !holdingSword) {
 			jump = true;
 		}
 
-		if (vMove != 0) {
+		if (vMove != 0 && !holdingSword) {
 			Climb (vMove);
 		}
 
@@ -70,7 +72,11 @@ public class PlayerControl : MonoBehaviour {
 	private void OnCollisionEnter2D(Collision2D coll){
 		string layer = LayerMask.LayerToName(coll.gameObject.layer);
 		if (layer == "Enemies") {
-			KillPlayer();
+			if (holdingSword) {
+				KillEnemy(coll.gameObject);
+			} else {
+				KillPlayer();
+			}
 		}
 	}
 
@@ -78,6 +84,9 @@ public class PlayerControl : MonoBehaviour {
 		string name = coll.gameObject.name;
 		if (name == "Ladder") {
 			atLadder = true;
+		} else if (name == "Sword") {
+			EquipSword();
+			Destroy(coll.gameObject);
 		}
 	}
 	
@@ -89,13 +98,17 @@ public class PlayerControl : MonoBehaviour {
 			anim.SetBool("Climbing", false);		
 		}
 	}
-
-  	//TODO move to other script
+	
 	private void KillPlayer () {
 		anim.SetTrigger("Dead");
 		rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 5f);
 		collider2D.enabled = false;
 		GameControl.LifeLost();
+	}
+
+	private void KillEnemy (GameObject enemy) {
+		//TODO add score
+		Destroy(enemy);
 	}
 
 	private void Climb (float vMove) {
@@ -110,6 +123,11 @@ public class PlayerControl : MonoBehaviour {
 				transform.Translate (-Vector2.up * vSpeed * Time.deltaTime);
 			}
 		}
+	}
+
+	private void EquipSword () {
+		holdingSword = true;
+		sword.renderer.enabled = true;
 	}
 
 }
