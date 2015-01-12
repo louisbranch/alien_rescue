@@ -6,6 +6,7 @@ public class PlayerControl : MonoBehaviour {
 	public float hSpeed = 5f;
   	public float vSpeed = 3f;
 	public float jumpForce = 400f;
+	public float powerUpTimer = 5f;
 
 	public GameObject sword;
 
@@ -128,6 +129,12 @@ public class PlayerControl : MonoBehaviour {
 	private void EquipSword () {
 		holdingSword = true;
 		sword.renderer.enabled = true;
+		Invoke("UnequipSword", powerUpTimer);
+	}
+
+	private void UnequipSword () {
+		holdingSword = false;
+		sword.renderer.enabled = false;
 	}
 
 }
