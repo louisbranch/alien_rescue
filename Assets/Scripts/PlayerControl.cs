@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
-
+	
 	public float hSpeed = 5f;
   	public float vSpeed = 3f;
 	public float jumpForce = 400f;

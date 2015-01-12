@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\EnemySpawner.cs" />
      <Compile Include="Assets\Scripts\OneWayPlatform.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
+     <Compile Include="Assets\Scripts\PlayerSounds.cs" />
      <Compile Include="Assets\Scripts\Transform2D.cs" />
      <Compile Include="Assets\Scripts\UI\GameControl.cs" />
      <Compile Include="Assets\Scripts\UI\HighScoresDisplay.cs" />
