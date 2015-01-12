@@ -34,7 +34,7 @@ public class PlayerControl : MonoBehaviour {
 		if (Input.GetButtonDown("Jump") && grounded && !climbing) {
 			jump = true;
 		}
-		
+
 		if (canClimb && vMove != 0 && (grounded || climbing)) {
 			StartClimbing();
 			if (vMove > 0) {
@@ -80,7 +80,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 	}
 
-	private void OnTriggerEnter2D(Collider2D coll) {
+	private void OnTriggerStay2D(Collider2D coll) {
 		string name = coll.gameObject.name;
 		if (name == "Ladder") {
 			canClimb = true;
@@ -90,7 +90,7 @@ public class PlayerControl : MonoBehaviour {
 	private void OnTriggerExit2D(Collider2D coll) {
 		string name = coll.gameObject.name;
 		if (name == "Ladder") {
-			DisableClimbing();
+			DisableClimbing();		
 		}
 	}
 
