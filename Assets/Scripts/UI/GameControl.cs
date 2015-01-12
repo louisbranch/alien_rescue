@@ -3,6 +3,9 @@ using System.Collections;
 
 public class GameControl : MonoBehaviour {
 
+	private static float deathDelay = 3f;
+	private static float deathDelayCounter = 0f;
+
 	private static int lives = 3;
 	private static bool paused = false;
 	private static bool won = false;
@@ -14,6 +17,10 @@ public class GameControl : MonoBehaviour {
 	}
 	
 	void Update () {
+
+		if (deathDelayCounter > 0 && (Time.time - deathDelayCounter) > deathDelay) {
+			ReloadLevel();
+		}
 		
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			Application.LoadLevel("Menu");
@@ -50,6 +57,10 @@ public class GameControl : MonoBehaviour {
 
 	public static void LifeLost() {
 		--currentLives;
+		deathDelayCounter = Time.time;
+	}
+
+	public static void ReloadLevel() {
 		if (currentLives == 0) {
 			currentLives = lives;  // reset number of lives
 			Application.LoadLevel("GameOver");
