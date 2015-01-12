@@ -11,8 +11,7 @@ public class PlayerControl : MonoBehaviour {
 	private bool grounded = false;
 
   	private bool jump = false;
-	private bool canClimb = false;
-	private bool climbing = false;
+	private bool atLadder = false;
 
 	public Transform movementChecker;
 	public float checkerRadius = 0.1f;
@@ -27,23 +26,17 @@ public class PlayerControl : MonoBehaviour {
 	private void Update () {
 
 		float vMove = Input.GetAxis("Vertical");
-		float vVelo = rigidbody2D.velocity.y;
 
 		grounded = Physics2D.OverlapCircle(movementChecker.position, checkerRadius, groundLayer);
 
 		anim.SetBool("Grounded", grounded);
 
-		if (Input.GetButtonDown("Jump") && grounded && !climbing) {
+		if (Input.GetButtonDown("Jump") && grounded) {
 			jump = true;
 		}
 
-		if (canClimb && vMove != 0 && vVelo == 0 && (grounded || climbing)) {
-			StartClimbing();
-			if (vMove > 0) {
-				transform.Translate (Vector2.up * vSpeed * Time.deltaTime);
-			} else {
-				transform.Translate (-Vector2.up * vSpeed * Time.deltaTime);
-			}
+		if (vMove != 0) {
+			Climb (vMove);
 		}
 
 	}
@@ -59,11 +52,10 @@ public class PlayerControl : MonoBehaviour {
 			if (hMove > 0 && !facingRight) {
 				Transform2D.FlipX(gameObject);
 				facingRight = !facingRight;
-				DisableClimbing();
+
 			} else if (hMove < 0 && facingRight) {
 				Transform2D.FlipX(gameObject);
 				facingRight = !facingRight;
-				DisableClimbing();
 			}
 		}
 		
@@ -85,14 +77,16 @@ public class PlayerControl : MonoBehaviour {
 	private void OnTriggerStay2D(Collider2D coll) {
 		string name = coll.gameObject.name;
 		if (name == "Ladder") {
-			canClimb = true;
+			atLadder = true;
 		}
 	}
 	
 	private void OnTriggerExit2D(Collider2D coll) {
 		string name = coll.gameObject.name;
 		if (name == "Ladder") {
-			DisableClimbing();		
+			atLadder = false;
+			rigidbody2D.gravityScale = 1;
+			anim.SetBool("Climbing", false);		
 		}
 	}
 
@@ -104,18 +98,18 @@ public class PlayerControl : MonoBehaviour {
 		GameControl.LifeLost();
 	}
 
-	private void StartClimbing() {
-		climbing = true;
-		rigidbody2D.gravityScale = 0;
-		rigidbody2D.velocity = new Vector2(0, 0);
-		anim.SetBool("Climbing", true);
-	}
-
-	private void DisableClimbing() {
-		climbing = false;
-		canClimb = false;
-		rigidbody2D.gravityScale = 1;
-		anim.SetBool("Climbing", false);
+	private void Climb (float vMove) {
+		float vVelo = rigidbody2D.velocity.y;
+		if (atLadder && vVelo == 0) {
+			rigidbody2D.gravityScale = 0;
+			rigidbody2D.velocity = new Vector2(0, 0);
+			anim.SetBool("Climbing", true);
+			if (vMove > 0) {
+				transform.Translate (Vector2.up * vSpeed * Time.deltaTime);
+			} else {
+				transform.Translate (-Vector2.up * vSpeed * Time.deltaTime);
+			}
+		}
 	}
 
 }
