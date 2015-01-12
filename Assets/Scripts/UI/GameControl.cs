@@ -62,6 +62,7 @@ public class GameControl : MonoBehaviour {
 	}
 
 	public static void ReloadLevel() {
+		deathDelayCounter = 0;
 		if (currentLives == 0) {
 			currentLives = lives;  // reset number of lives
 			Application.LoadLevel("GameOver");
