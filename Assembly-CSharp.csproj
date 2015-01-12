@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BeeAI.cs" />
      <Compile Include="Assets\Scripts\BossAI.cs" />
-     <Compile Include="Assets\Scripts\Climbable.cs" />
      <Compile Include="Assets\Scripts\EnemySpawner.cs" />
      <Compile Include="Assets\Scripts\OneWayPlatform.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
