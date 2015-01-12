@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour {
 
 	private bool facingRight = true;
 	private bool grounded = false;
+
   	private bool jump = false;
 	private bool canClimb = false;
 	private bool climbing = false;
@@ -26,6 +27,7 @@ public class PlayerControl : MonoBehaviour {
 	private void Update () {
 
 		float vMove = Input.GetAxis("Vertical");
+		float vVelo = rigidbody2D.velocity.y;
 
 		grounded = Physics2D.OverlapCircle(movementChecker.position, checkerRadius, groundLayer);
 
@@ -35,7 +37,7 @@ public class PlayerControl : MonoBehaviour {
 			jump = true;
 		}
 
-		if (canClimb && vMove != 0 && (grounded || climbing)) {
+		if (canClimb && vMove != 0 && vVelo == 0 && (grounded || climbing)) {
 			StartClimbing();
 			if (vMove > 0) {
 				transform.Translate (Vector2.up * vSpeed * Time.deltaTime);
