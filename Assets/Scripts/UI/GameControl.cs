@@ -24,6 +24,7 @@ public class GameControl : MonoBehaviour {
 		
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			Application.LoadLevel("Menu");
+			Screen.showCursor = true;
 		}
 
 		if (Input.GetButtonDown("Pause")) {
