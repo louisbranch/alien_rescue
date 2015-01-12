@@ -48,11 +48,13 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BeeAI.cs" />
      <Compile Include="Assets\Scripts\BossAI.cs" />
+     <Compile Include="Assets\Scripts\EndPointChecker.cs" />
      <Compile Include="Assets\Scripts\EnemySpawner.cs" />
      <Compile Include="Assets\Scripts\OneWayPlatform.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
      <Compile Include="Assets\Scripts\Transform2D.cs" />
      <Compile Include="Assets\Scripts\UI\GameControl.cs" />
+     <Compile Include="Assets\Scripts\UI\HighScoresDisplay.cs" />
      <Compile Include="Assets\Scripts\UI\MenuOptions.cs" />
      <Compile Include="Assets\Scripts\UI\SplashScreen.cs" />
      <Compile Include="Assets\Scripts\UI\TimerDisplay.cs" />

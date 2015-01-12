@@ -4,10 +4,12 @@ using System.Collections;
 public class GameControl : MonoBehaviour {
 
 	private static bool paused = false;
+	private static bool won = false;
 	private static int lives = 3;
 
 	void Start () {
 		Screen.showCursor = false; 
+		won = false;
 	}
 	
 	void Update () {
@@ -25,6 +27,16 @@ public class GameControl : MonoBehaviour {
 			paused = !paused;
 		}
 
+	}
+
+	public static bool Won() {
+		return won;
+	}
+
+	public static void WinLevel() {
+		won = true;
+		Application.LoadLevel("GameOver");
+		Screen.showCursor = true; 
 	}
 
 	public static void LifeLost() {
