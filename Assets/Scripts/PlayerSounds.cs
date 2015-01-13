@@ -4,8 +4,10 @@ using System.Collections;
 public class PlayerSounds : MonoBehaviour {
 
 	public AudioClip[] footsteps;
+	public AudioClip jump;
 	public AudioClip jumpBonus;
 	public AudioClip death;
+	public AudioClip powerup;
 
 	public bool playFootstep = false;
 
@@ -31,6 +33,10 @@ public class PlayerSounds : MonoBehaviour {
 		AudioClip sound = footsteps[i];
 		source.PlayOneShot(sound, 0.2f);
 	}
+	
+	public void PlayJumpSound() {
+		source.PlayOneShot(jump);
+	}
 
 	public void PlayJumpBonusSound() {
 		source.PlayOneShot(jumpBonus);
@@ -38,6 +44,10 @@ public class PlayerSounds : MonoBehaviour {
 
 	public void PlayDeathSound() {
 		source.PlayOneShot(death);
+	}
+
+	public void PlayPowerupSound() {
+		source.PlayOneShot(powerup);
 	}
 
 }

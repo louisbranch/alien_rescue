@@ -32,7 +32,7 @@ public class BossAI : MonoBehaviour {
 			Transform2D.FlipX(gameObject);
 			facingRight = !facingRight;
 
-			Vector3 newPosition = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z); 
+			Vector3 newPosition = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z); 
 			clone = (GameObject)Instantiate(enemy, newPosition, Quaternion.identity);
 			clone.name = enemy.name;
 			clone.rigidbody2D.AddForce(new Vector2(200f, 0));

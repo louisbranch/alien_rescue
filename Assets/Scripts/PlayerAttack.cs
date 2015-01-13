@@ -45,6 +45,7 @@ public class PlayerAttack : MonoBehaviour {
 		holdingWeapon = true;
 		weapon.renderer.enabled = true;
 		Invoke("UnequipWeapon", powerUpTimer);
+		audio.PlayPowerupSound();
 	}
 	
 	private void UnequipWeapon () {

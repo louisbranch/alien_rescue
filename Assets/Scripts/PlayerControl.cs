@@ -18,10 +18,12 @@ public class PlayerControl : MonoBehaviour {
 
 	Animator anim;
 	PlayerAttack attack;
+	PlayerSounds audio;
 
 	private void Awake () {
 		anim = GetComponent<Animator>();
 		attack = GetComponent<PlayerAttack>();
+		audio =  gameObject.GetComponent<PlayerSounds>();
 	}
 
 	private void Update () {
@@ -63,6 +65,7 @@ public class PlayerControl : MonoBehaviour {
 		if (jump) {
 			anim.SetBool("Grounded", false);
 			rigidbody2D.AddForce(new Vector2(0, jumpForce));
+			audio.PlayJumpSound();
 			jump = false;
 		} 	
 
