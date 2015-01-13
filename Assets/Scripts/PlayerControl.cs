@@ -6,7 +6,7 @@ public class PlayerControl : MonoBehaviour {
 	public float hSpeed = 5f;
   	public float vSpeed = 3f;
 	public float jumpForce = 400f;
-
+	
 	private bool facingRight = true;
 	private bool grounded = false;
   	private bool jump = false;

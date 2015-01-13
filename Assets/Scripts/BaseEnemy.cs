@@ -19,4 +19,8 @@ public class BaseEnemy : MonoBehaviour {
 		return killingPoints;
 	}
 
+	public int JumpForPoints () {
+		return jumpingPoints;
+	}
+
 }

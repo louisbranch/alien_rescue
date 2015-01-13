@@ -15,8 +15,8 @@ public class PlayerScore : MonoBehaviour {
 	private int highscore;
 	private Text guiPopup;
 	private RectTransform rect;
-	private float bonusCounter;
-	private float displayCounter;
+	private float bonusCounter = 0;
+	private float displayCounter = 0;
 
 	private void Awake () {
 		rect = popup.GetComponent<RectTransform>();
@@ -37,7 +37,7 @@ public class PlayerScore : MonoBehaviour {
 
 		float time = Time.time;
 
-		if ((time - displayCounter) > displayLimit) {
+		if (displayCounter > 0 && (time - displayCounter) > displayLimit) {
 			guiPopup.enabled = false;
 		}
 
