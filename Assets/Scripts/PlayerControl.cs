@@ -101,10 +101,11 @@ public class PlayerControl : MonoBehaviour {
 	}
 	
 	private void KillPlayer () {
-		anim.SetTrigger("Dead");
-		rigidbody2D.velocity = new Vector2(0, 5f);
-		collider2D.enabled = false;
+		rigidbody2D.velocity = new Vector2(0, 5f); 	// give hero a small jump kick
+		rigidbody2D.gravityScale = 1;  				// add gravity back in case of being climbing
+		collider2D.enabled = false;    				// allow hero to fall through anything
 		GameControl.LifeLost();
+		anim.SetBool("Dead", true);
 	}
 
 	private void KillEnemy (GameObject enemy) {
