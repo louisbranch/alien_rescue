@@ -102,7 +102,7 @@ public class PlayerControl : MonoBehaviour {
 	
 	private void KillPlayer () {
 		anim.SetTrigger("Dead");
-		rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 5f);
+		rigidbody2D.velocity = new Vector2(0, 5f);
 		collider2D.enabled = false;
 		GameControl.LifeLost();
 	}
