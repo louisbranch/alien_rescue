@@ -47,6 +47,7 @@
 'Assets/Scripts/EndPointChecker.cs'
 'Assets/Scripts/EnemySpawner.cs'
 'Assets/Scripts/OneWayPlatform.cs'
+'Assets/Scripts/Player.cs'
 'Assets/Scripts/PlayerAttack.cs'
 'Assets/Scripts/PlayerControl.cs'
 'Assets/Scripts/PlayerJumpChecker.cs'

@@ -15,15 +15,11 @@ public class PlayerControl : MonoBehaviour {
 	public Transform movementChecker;
 	public float checkerRadius = 0.1f;
 	public LayerMask groundLayer;
-
-	Animator anim;
-	PlayerAttack attack;
-	PlayerSounds audio;
+	
+	Player player;
 
 	private void Awake () {
-		anim = GetComponent<Animator>();
-		attack = GetComponent<PlayerAttack>();
-		audio =  gameObject.GetComponent<PlayerSounds>();
+		player = GetComponent<Player>();
 	}
 
 	private void Update () {
@@ -32,13 +28,13 @@ public class PlayerControl : MonoBehaviour {
 
 		grounded = Physics2D.OverlapCircle(movementChecker.position, checkerRadius, groundLayer);
 
-		anim.SetBool("Grounded", grounded);
+		player.anim.SetBool("Grounded", grounded);
 
-		if (Input.GetButtonDown("Jump") && grounded && !attack.HoldingWeapon()) {
+		if (Input.GetButtonDown("Jump") && grounded && !player.attack.HoldingWeapon()) {
 			jump = true;
 		}
 
-		if (vMove != 0 && !attack.HoldingWeapon()) {
+		if (vMove != 0 && !player.attack.HoldingWeapon()) {
 			Climb (vMove);
 		}
 
@@ -50,7 +46,7 @@ public class PlayerControl : MonoBehaviour {
 	
 		if (grounded) {
 			rigidbody2D.velocity = new Vector2(hMove * hSpeed, rigidbody2D.velocity.y);
-			anim.SetFloat("HSpeed", Mathf.Abs(hMove));
+			player.anim.SetFloat("HSpeed", Mathf.Abs(hMove));
 
 			if (hMove > 0 && !facingRight) {
 				Transform2D.FlipX(gameObject);
@@ -63,9 +59,9 @@ public class PlayerControl : MonoBehaviour {
 		}
 		
 		if (jump) {
-			anim.SetBool("Grounded", false);
+			player.anim.SetBool("Grounded", false);
 			rigidbody2D.AddForce(new Vector2(0, jumpForce));
-			audio.PlayJumpSound();
+			player.sounds.PlayJumpSound();
 			jump = false;
 		} 	
 
@@ -83,7 +79,7 @@ public class PlayerControl : MonoBehaviour {
 		if (name == "Ladder") {
 			atLadder = false;
 			rigidbody2D.gravityScale = 1;
-			anim.SetBool("Climbing", false);		
+			player.anim.SetBool("Climbing", false);		
 		}
 	}
 
@@ -92,7 +88,7 @@ public class PlayerControl : MonoBehaviour {
 		if (atLadder && vVelo == 0) {					// allows climbing if hero is not jumping/falling
 			rigidbody2D.gravityScale = 0;				// disable gravity to allow static Y-axis movement
 			rigidbody2D.velocity = new Vector2(0, 0);	// cancel any current velocity
-			anim.SetBool("Climbing", true);
+			player.anim.SetBool("Climbing", true);
 			if (vMove > 0) {
 				transform.Translate (Vector2.up * vSpeed * Time.deltaTime);
 			} else {

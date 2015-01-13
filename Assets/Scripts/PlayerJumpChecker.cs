@@ -4,17 +4,15 @@ using System.Collections;
 public class PlayerJumpChecker : MonoBehaviour {
 
 	public float bonusTimeLimit = 2f;
-	public GameObject player;
+	public GameObject hero;
 	
-	PlayerScore score;
-	PlayerSounds audio;
+	Player player;
 
 	private float counter = 0;
 	private int bonus = 0;
 
 	private void Awake () {
-		score = player.GetComponent<PlayerScore>();
-		audio = player.GetComponent<PlayerSounds>();
+		player = hero.GetComponent<Player>();
 	}
 
 	private void Update() {
@@ -26,17 +24,17 @@ public class PlayerJumpChecker : MonoBehaviour {
 
 	private void OnTriggerExit2D (Collider2D coll) {
 		string layer = LayerMask.LayerToName(coll.gameObject.layer);
-		if (layer == "Enemies" && player.collider2D.enabled) {
+		if (layer == "Enemies" && !player.Dead() && player.MidAir()) {
 			++bonus;
 			KillEnemy(coll.gameObject);
 			counter = Time.time;
-			audio.PlayJumpBonusSound();
+			player.sounds.PlayJumpBonusSound();
 		}
 	}
 
 	private void KillEnemy (GameObject enemy) {
 		int points = enemy.GetComponent<BaseEnemy>().JumpForPoints();
-		score.UpdateScore(points * bonus);
+		player.score.UpdateScore(points * bonus);
 	}
 
 }

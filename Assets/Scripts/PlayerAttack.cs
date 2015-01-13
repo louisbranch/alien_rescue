@@ -7,15 +7,11 @@ public class PlayerAttack : MonoBehaviour {
 	public GameObject weapon;
 
 	private bool holdingWeapon = false;
-
-	Animator anim;
-	PlayerScore score;
-	PlayerSounds audio;
+	
+	Player player;
 	
 	private void Awake () {
-		anim = gameObject.GetComponent<Animator>();
-		score = gameObject.GetComponent<PlayerScore>();
-		audio =  gameObject.GetComponent<PlayerSounds>();
+		player =  gameObject.GetComponent<Player>();
 	}
 	
 	private void OnCollisionEnter2D(Collision2D coll){
@@ -45,7 +41,7 @@ public class PlayerAttack : MonoBehaviour {
 		holdingWeapon = true;
 		weapon.renderer.enabled = true;
 		Invoke("UnequipWeapon", powerUpTimer);
-		audio.PlayPowerupSound();
+		player.sounds.PlayPowerupSound();
 	}
 	
 	private void UnequipWeapon () {
@@ -57,14 +53,13 @@ public class PlayerAttack : MonoBehaviour {
 		rigidbody2D.velocity = new Vector2(0, 5f); 	// give hero a small jump kick
 		rigidbody2D.gravityScale = 1;  				// add gravity back in case of being climbing
 		collider2D.enabled = false;    				// allow hero to fall through anything
-		GameControl.LifeLost(score.LosingScore());
-		anim.SetBool("Dead", true);
-		audio.PlayDeathSound();
+		player.SetDead();
+
 	}
 	
 	private void KillEnemy (GameObject enemy) {
 		int points = enemy.GetComponent<BaseEnemy>().KillForPoints();
-		score.UpdateScore(points);
+		player.score.UpdateScore(points);
 	}
 
 }
