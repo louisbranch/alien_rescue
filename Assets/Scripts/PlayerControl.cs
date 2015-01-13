@@ -6,24 +6,22 @@ public class PlayerControl : MonoBehaviour {
 	public float hSpeed = 5f;
   	public float vSpeed = 3f;
 	public float jumpForce = 400f;
-	public float powerUpTimer = 5f;
-
-	public GameObject sword;
 
 	private bool facingRight = true;
 	private bool grounded = false;
   	private bool jump = false;
 	private bool atLadder = false;
-	private bool holdingSword = false;
 
 	public Transform movementChecker;
 	public float checkerRadius = 0.1f;
 	public LayerMask groundLayer;
 
 	Animator anim;
+	PlayerAttack attack;
 
 	private void Awake () {
 		anim = GetComponent<Animator>();
+		attack = GetComponent<PlayerAttack>();
 	}
 
 	private void Update () {
@@ -34,11 +32,11 @@ public class PlayerControl : MonoBehaviour {
 
 		anim.SetBool("Grounded", grounded);
 
-		if (Input.GetButtonDown("Jump") && grounded && !holdingSword) {
+		if (Input.GetButtonDown("Jump") && grounded && !attack.HoldingWeapon()) {
 			jump = true;
 		}
 
-		if (vMove != 0 && !holdingSword) {
+		if (vMove != 0 && !attack.HoldingWeapon()) {
 			Climb (vMove);
 		}
 
@@ -69,25 +67,11 @@ public class PlayerControl : MonoBehaviour {
 		} 	
 
 	}
-
-	private void OnCollisionEnter2D(Collision2D coll){
-		string layer = LayerMask.LayerToName(coll.gameObject.layer);
-		if (layer == "Enemies") {
-			if (holdingSword) {
-				KillEnemy(coll.gameObject);
-			} else {
-				KillPlayer();
-			}
-		}
-	}
-
+	
 	private void OnTriggerStay2D(Collider2D coll) {
 		string name = coll.gameObject.name;
 		if (name == "Ladder") {
 			atLadder = true;
-		} else if (name == "Sword") {
-			EquipSword();
-			Destroy(coll.gameObject);
 		}
 	}
 	
@@ -99,25 +83,12 @@ public class PlayerControl : MonoBehaviour {
 			anim.SetBool("Climbing", false);		
 		}
 	}
-	
-	private void KillPlayer () {
-		rigidbody2D.velocity = new Vector2(0, 5f); 	// give hero a small jump kick
-		rigidbody2D.gravityScale = 1;  				// add gravity back in case of being climbing
-		collider2D.enabled = false;    				// allow hero to fall through anything
-		GameControl.LifeLost();
-		anim.SetBool("Dead", true);
-	}
-
-	private void KillEnemy (GameObject enemy) {
-		//TODO add score
-		Destroy(enemy);
-	}
 
 	private void Climb (float vMove) {
 		float vVelo = rigidbody2D.velocity.y;
-		if (atLadder && vVelo == 0) {
-			rigidbody2D.gravityScale = 0;
-			rigidbody2D.velocity = new Vector2(0, 0);
+		if (atLadder && vVelo == 0) {					// allows climbing if hero is not jumping/falling
+			rigidbody2D.gravityScale = 0;				// disable gravity to allow static Y-axis movement
+			rigidbody2D.velocity = new Vector2(0, 0);	// cancel any current velocity
 			anim.SetBool("Climbing", true);
 			if (vMove > 0) {
 				transform.Translate (Vector2.up * vSpeed * Time.deltaTime);
@@ -125,17 +96,6 @@ public class PlayerControl : MonoBehaviour {
 				transform.Translate (-Vector2.up * vSpeed * Time.deltaTime);
 			}
 		}
-	}
-
-	private void EquipSword () {
-		holdingSword = true;
-		sword.renderer.enabled = true;
-		Invoke("UnequipSword", powerUpTimer);
-	}
-
-	private void UnequipSword () {
-		holdingSword = false;
-		sword.renderer.enabled = false;
 	}
 
 }
