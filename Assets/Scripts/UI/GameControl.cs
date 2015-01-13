@@ -79,8 +79,16 @@ public class GameControl : MonoBehaviour {
 	private static void SaveHighscore(int score) {
 		if (score > highscore) {
 			highscore = score;
+			for (int i = 0; i < 5; i++) {
+				int current = PlayerPrefs.GetInt("highscore_" + i);
+				if (highscore > current) {
+					PlayerPrefs.SetInt("highscore_" + i, highscore);
+					break;
+				} else if (highscore == current) {
+					break;
+				}
+			}
 		}
-		//TODO save into player preferences
 	}
 
 	private static void ResetDefaults() {
