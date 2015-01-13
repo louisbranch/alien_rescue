@@ -10,10 +10,12 @@ public class PlayerAttack : MonoBehaviour {
 
 	Animator anim;
 	PlayerScore score;
+	PlayerSounds audio;
 	
 	private void Awake () {
 		anim = gameObject.GetComponent<Animator>();
 		score = gameObject.GetComponent<PlayerScore>();
+		audio =  gameObject.GetComponent<PlayerSounds>();
 	}
 	
 	private void OnCollisionEnter2D(Collision2D coll){
@@ -56,6 +58,7 @@ public class PlayerAttack : MonoBehaviour {
 		collider2D.enabled = false;    				// allow hero to fall through anything
 		GameControl.LifeLost(score.LosingScore());
 		anim.SetBool("Dead", true);
+		audio.PlayDeathSound();
 	}
 	
 	private void KillEnemy (GameObject enemy) {

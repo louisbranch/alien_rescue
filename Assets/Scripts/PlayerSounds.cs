@@ -5,6 +5,7 @@ public class PlayerSounds : MonoBehaviour {
 
 	public AudioClip[] footsteps;
 	public AudioClip jumpBonus;
+	public AudioClip death;
 
 	public bool playFootstep = false;
 
@@ -32,7 +33,11 @@ public class PlayerSounds : MonoBehaviour {
 	}
 
 	public void PlayJumpBonusSound() {
-		source.PlayOneShot(jumpBonus, 1f);
+		source.PlayOneShot(jumpBonus);
+	}
+
+	public void PlayDeathSound() {
+		source.PlayOneShot(death);
 	}
 
 }
