@@ -10,6 +10,7 @@ public class GameControl : MonoBehaviour {
 	private static bool paused = false;
 	private static bool won = false;
 	private static int currentLives = lives;
+	private static int highscore = 0;
 
 	void Start () {
 		Screen.showCursor = false; 
@@ -42,10 +43,14 @@ public class GameControl : MonoBehaviour {
 		return won;
 	}
 
-	public static void WinLevel() {
+	public static int Highscore() {
+		return highscore;
+	}
+
+	public static void WinLevel(int score) {
 		won = true;
-		Application.LoadLevel("GameOver");
-		Screen.showCursor = true; 
+		SaveHighscore(score);
+		ResetDefaults();
 	}
 
 	public static int TotalLives() {
@@ -56,20 +61,33 @@ public class GameControl : MonoBehaviour {
 		return currentLives;
 	}
 
-	public static void LifeLost() {
+	public static void LifeLost(int score) {
 		--currentLives;
 		deathDelayCounter = Time.time;
+		SaveHighscore(score);
 	}
 
 	public static void ReloadLevel() {
 		deathDelayCounter = 0;
 		if (currentLives == 0) {
-			currentLives = lives;  // reset number of lives
-			Application.LoadLevel("GameOver");
-			Screen.showCursor = true; 
+			ResetDefaults();
 		} else {
 			Application.LoadLevel(Application.loadedLevel);
 		}
+	}
+
+	private static void SaveHighscore(int score) {
+		if (score > highscore) {
+			highscore = score;
+		}
+		//TODO save into player preferences
+	}
+
+	private static void ResetDefaults() {
+		currentLives = lives;
+		highscore = 0;
+		Application.LoadLevel("GameOver");
+		Screen.showCursor = true;
 	}
 
 }

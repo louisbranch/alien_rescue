@@ -60,11 +60,10 @@
      <Compile Include="Assets\Scripts\Transform2D.cs" />
      <Compile Include="Assets\Scripts\UI\BlinkText.cs" />
      <Compile Include="Assets\Scripts\UI\GameControl.cs" />
-     <Compile Include="Assets\Scripts\UI\HighScoresDisplay.cs" />
+     <Compile Include="Assets\Scripts\UI\HighscoresDisplay.cs" />
      <Compile Include="Assets\Scripts\UI\LivesDisplay.cs" />
      <Compile Include="Assets\Scripts\UI\MenuOptions.cs" />
      <Compile Include="Assets\Scripts\UI\SplashScreen.cs" />
-     <Compile Include="Assets\Scripts\UI\TimerDisplay.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

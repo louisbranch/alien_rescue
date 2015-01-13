@@ -54,7 +54,7 @@ public class PlayerAttack : MonoBehaviour {
 		rigidbody2D.velocity = new Vector2(0, 5f); 	// give hero a small jump kick
 		rigidbody2D.gravityScale = 1;  				// add gravity back in case of being climbing
 		collider2D.enabled = false;    				// allow hero to fall through anything
-		GameControl.LifeLost();
+		GameControl.LifeLost(score.LosingScore());
 		anim.SetBool("Dead", true);
 	}
 	
