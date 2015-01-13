@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\OneWayPlatform.cs" />
      <Compile Include="Assets\Scripts\PlayerAttack.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
+     <Compile Include="Assets\Scripts\PlayerScore.cs" />
      <Compile Include="Assets\Scripts\PlayerSounds.cs" />
      <Compile Include="Assets\Scripts\RandomCollider.cs" />
      <Compile Include="Assets\Scripts\Transform2D.cs" />
