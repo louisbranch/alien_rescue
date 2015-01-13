@@ -4,12 +4,9 @@ using System.Collections;
 public class PlayerAttack : MonoBehaviour {
 
 	public float powerUpTimer = 5f;
-	public float killingBonusTimeLimit = 2f;
 	public GameObject weapon;
 
 	private bool holdingWeapon = false;
-	private int killingBonus = 0;
-	private float lastKill = 0f;
 
 	Animator anim;
 	PlayerScore score;
@@ -17,13 +14,6 @@ public class PlayerAttack : MonoBehaviour {
 	private void Awake () {
 		anim = gameObject.GetComponent<Animator>();
 		score = gameObject.GetComponent<PlayerScore>();
-	}
-
-	private void Update () {
-		if ((Time.time - lastKill) > killingBonusTimeLimit) {
-			killingBonus = 0;
-			lastKill = 0f;
-		}
 	}
 	
 	private void OnCollisionEnter2D(Collision2D coll){
@@ -70,9 +60,7 @@ public class PlayerAttack : MonoBehaviour {
 	
 	private void KillEnemy (GameObject enemy) {
 		int points = enemy.GetComponent<BaseEnemy>().KillForPoints();
-		++killingBonus;
-		lastKill = Time.time;
-		score.UpdateScore(points * killingBonus);
+		score.UpdateScore(points);
 	}
 
 }
