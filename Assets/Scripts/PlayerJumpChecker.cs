@@ -7,12 +7,14 @@ public class PlayerJumpChecker : MonoBehaviour {
 	public GameObject player;
 	
 	PlayerScore score;
+	PlayerSounds audio;
 
 	private float counter = 0;
 	private int bonus = 0;
 
 	private void Awake () {
 		score = player.GetComponent<PlayerScore>();
+		audio = player.GetComponent<PlayerSounds>();
 	}
 
 	private void Update() {
@@ -28,6 +30,7 @@ public class PlayerJumpChecker : MonoBehaviour {
 			++bonus;
 			KillEnemy(coll.gameObject);
 			counter = Time.time;
+			audio.PlayJumpBonusSound();
 		}
 	}
 

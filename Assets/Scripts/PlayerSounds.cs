@@ -4,7 +4,10 @@ using System.Collections;
 public class PlayerSounds : MonoBehaviour {
 
 	public AudioClip[] footsteps;
+	public AudioClip jumpBonus;
+
 	public bool playFootstep = false;
+
 	private float footstepRate = 0.2f;
 	private float footstepCounter;
 	private AudioSource source;
@@ -27,6 +30,9 @@ public class PlayerSounds : MonoBehaviour {
 		AudioClip sound = footsteps[i];
 		source.PlayOneShot(sound, 0.2f);
 	}
-	
+
+	public void PlayJumpBonusSound() {
+		source.PlayOneShot(jumpBonus, 1f);
+	}
 
 }

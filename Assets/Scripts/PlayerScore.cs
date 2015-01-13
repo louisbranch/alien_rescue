@@ -41,7 +41,7 @@ public class PlayerScore : MonoBehaviour {
 			guiPopup.enabled = false;
 		}
 
-		if ((time - bonusCounter) > 1f) {
+		if (bonusTime > 0 && (time - bonusCounter) > 1f) {
 			bonusTime -= 100;
 			guiTimer.text = bonusTime.ToString();
 			bonusCounter = time;
