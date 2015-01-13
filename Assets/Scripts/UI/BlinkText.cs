@@ -8,10 +8,10 @@ public class BlinkText : MonoBehaviour {
 
 	public string[] dialogs;
 
-	private Text guiText;
+	private Text gui;
 
 	private void Awake () {
-		guiText = GetComponent<Text>();
+		gui = GetComponent<Text>();
 	}
 
 	private void Start () {
@@ -21,7 +21,7 @@ public class BlinkText : MonoBehaviour {
 	private void ToggleText () {
 		int i = Random.Range(0, dialogs.Length);
 		string dialog = dialogs[i];
-		guiText.text = dialog;
-		guiText.enabled = !guiText.enabled;
+		gui.text = dialog;
+		gui.enabled = !gui.enabled;
 	}
 }
