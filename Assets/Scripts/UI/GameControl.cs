@@ -83,7 +83,7 @@ public class GameControl : MonoBehaviour {
 				int current = PlayerPrefs.GetInt("highscore_" + i);
 				if (highscore > current) {
 					PlayerPrefs.SetInt("highscore_" + i, highscore);
-					break;
+					highscore = current; // move value down the chain
 				} else if (highscore == current) {
 					break;
 				}
