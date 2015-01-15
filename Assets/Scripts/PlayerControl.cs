@@ -15,8 +15,8 @@ public class PlayerControl : MonoBehaviour {
 	public float checkerRadius = 0.1f;
 	public LayerMask groundLayer;
 
-	private bool atLadder;
-	private bool atLadderEnd;
+	private bool atLadder = false;
+	private bool atLadderEnd = false;
 	
 	Player player;
 
@@ -73,17 +73,10 @@ public class PlayerControl : MonoBehaviour {
 		switch(coll.gameObject.name) {
 		case "Ladder":
 			atLadder = true;
-			break;
+			break;	
 		case "LadderEnds":
 			atLadderEnd = true;
 			break;
-		}
-	}
-
-	private void OnTriggerStay2D(Collider2D coll) {
-		string name = coll.gameObject.name;
-		if (!atLadder && name == "Ladder") {
-			atLadder = true;
 		}
 	}
 	
@@ -107,6 +100,10 @@ public class PlayerControl : MonoBehaviour {
 		return rigidbody2D.isKinematic;
 	}
 
+	public bool MidAir() {
+		return rigidbody2D.velocity.y != 0;
+	}
+
 	private void StopClimb () {
 		atLadder = false;
 		rigidbody2D.isKinematic = false;
@@ -114,13 +111,13 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	private void Climb (float vMove) {
-		float vVelo = rigidbody2D.velocity.y;
-		if (atLadder && vVelo == 0) {					    // allows climbing if hero is not jumping/falling
+		if (atLadder && !MidAir()) {					    // allows climbing if hero is not jumping/falling
 			rigidbody2D.isKinematic = true;					// disable gravity to allow static Y-axis movement
 			rigidbody2D.velocity = new Vector2(0, 0);		// cancel any current velocity
 			player.anim.SetBool("Climbing", true);
 			if (vMove > 0) {
 				transform.Translate (Vector2.up * vSpeed * Time.deltaTime);
+				atLadderEnd = false;
 			} else if (atLadderEnd && grounded) {
 				StopClimb();
 			} else {
