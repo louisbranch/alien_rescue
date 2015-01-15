@@ -6,11 +6,13 @@ public class Player : MonoBehaviour {
 	private static bool dead = false;
 
 	[HideInInspector] public Animator anim;
+	[HideInInspector] public PlayerControl control;
 	[HideInInspector] public PlayerAttack attack;
 	[HideInInspector] public PlayerSounds sounds;
 	[HideInInspector] public PlayerScore score;
 	
 	private void Awake () {
+		control = GetComponent<PlayerControl>();
 		anim = GetComponent<Animator>();
 		attack = GetComponent<PlayerAttack>();
 		sounds =  GetComponent<PlayerSounds>();
@@ -29,10 +31,6 @@ public class Player : MonoBehaviour {
 		GameControl.LifeLost(score.LosingScore());
 		anim.SetBool("Dead", true);
 		sounds.PlayDeathSound();
-	}
-
-	public bool MidAir() {
-		return rigidbody2D.velocity.y != 0;
 	}
 
 }

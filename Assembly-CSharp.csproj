@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\BossAI.cs" />
      <Compile Include="Assets\Scripts\EndPointChecker.cs" />
      <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+     <Compile Include="Assets\Scripts\KeepAlive.cs" />
      <Compile Include="Assets\Scripts\OneWayPlatform.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PlayerAttack.cs" />

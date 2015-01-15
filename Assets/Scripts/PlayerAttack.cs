@@ -25,7 +25,7 @@ public class PlayerAttack : MonoBehaviour {
 		}
 	}
 	
-	private void OnTriggerStay2D(Collider2D coll) {
+	private void OnTriggerEnter2D(Collider2D coll) {
 		string name = coll.gameObject.name;
 		if (name == "Sword") {
 			EquipWeapon();
