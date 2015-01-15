@@ -24,7 +24,7 @@ public class PlayerJumpChecker : MonoBehaviour {
 
 	private void OnTriggerExit2D (Collider2D coll) {
 		string layer = LayerMask.LayerToName(coll.gameObject.layer);
-		if (layer == "Enemies" && !player.Dead() && player.control.MidAir()) {
+		if (layer == "Enemies" && player.control.MidAir()) {
 			++bonus;
 			KillEnemy(coll.gameObject);
 			counter = Time.time;

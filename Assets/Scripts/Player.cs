@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
 		GameControl.LifeLost(score.LosingScore());
 		anim.SetBool("Dead", true);
 		sounds.PlayDeathSound();
+		dead = false;
 	}
 
 }
