@@ -60,6 +60,7 @@ public class PlayerAttack : MonoBehaviour {
 	private void KillEnemy (GameObject enemy) {
 		int points = enemy.GetComponent<BaseEnemy>().KillForPoints();
 		player.score.UpdateScore(points);
+		player.sounds.PlayAttackSound();
 	}
 
 }

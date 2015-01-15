@@ -8,6 +8,7 @@ public class PlayerSounds : MonoBehaviour {
 	public AudioClip jumpBonus;
 	public AudioClip death;
 	public AudioClip powerup;
+	public AudioClip attack;
 
 	public bool playFootstep = false;
 
@@ -48,6 +49,10 @@ public class PlayerSounds : MonoBehaviour {
 
 	public void PlayPowerupSound() {
 		source.PlayOneShot(powerup);
+	}
+
+	public void PlayAttackSound() {
+		source.PlayOneShot(attack);
 	}
 
 }
