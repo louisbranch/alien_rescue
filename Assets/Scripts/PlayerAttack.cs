@@ -51,7 +51,7 @@ public class PlayerAttack : MonoBehaviour {
 
 	private void KillPlayer () {
 		rigidbody2D.velocity = new Vector2(0, 5f); 	// give hero a small jump kick
-		rigidbody2D.gravityScale = 1;  				// add gravity back in case of being climbing
+		rigidbody2D.isKinematic = false;  			// add kinematic back in case of being climbing
 		collider2D.enabled = false;    				// allow hero to fall through anything
 		player.SetDead();
 

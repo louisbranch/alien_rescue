@@ -10,11 +10,13 @@ public class PlayerControl : MonoBehaviour {
 	private bool facingRight = true;
 	private bool grounded = false;
   	private bool jump = false;
-	private bool atLadder = false;
 
 	public Transform movementChecker;
 	public float checkerRadius = 0.1f;
 	public LayerMask groundLayer;
+
+	private bool atLadder;
+	private bool atLadderEnd;
 	
 	Player player;
 
@@ -44,7 +46,7 @@ public class PlayerControl : MonoBehaviour {
 
 		float hMove = Input.GetAxis("Horizontal");
 	
-		if (grounded) {
+		if (grounded && !Climbing()) {
 			rigidbody2D.velocity = new Vector2(hMove * hSpeed, rigidbody2D.velocity.y);
 			player.anim.SetFloat("HSpeed", Mathf.Abs(hMove));
 
@@ -67,30 +69,60 @@ public class PlayerControl : MonoBehaviour {
 
 	}
 	
+	private void OnTriggerEnter2D(Collider2D coll) {
+		switch(coll.gameObject.name) {
+		case "Ladder":
+			atLadder = true;
+			break;
+		case "LadderEnds":
+			atLadderEnd = true;
+			break;
+		}
+	}
+
 	private void OnTriggerStay2D(Collider2D coll) {
 		string name = coll.gameObject.name;
-		if (name == "Ladder") {
+		if (!atLadder && name == "Ladder") {
 			atLadder = true;
 		}
 	}
 	
 	private void OnTriggerExit2D(Collider2D coll) {
-		string name = coll.gameObject.name;
-		if (name == "Ladder") {
-			atLadder = false;
-			rigidbody2D.isKinematic = false;
-			player.anim.SetBool("Climbing", false);		
+		switch(coll.gameObject.name) {
+		case "Ladder":
+			StopClimb();
+			break;
+		case "LadderEnds":
+			atLadderEnd = false;
+			break;
 		}
+	}
+
+	public bool GoingDown() {
+		return Input.GetAxis("Vertical") < 0;
+	}
+
+	// Kinematic is only disabled during vertical moment
+	public bool Climbing() {
+		return rigidbody2D.isKinematic;
+	}
+
+	private void StopClimb () {
+		atLadder = false;
+		rigidbody2D.isKinematic = false;
+		player.anim.SetBool("Climbing", false);		
 	}
 
 	private void Climb (float vMove) {
 		float vVelo = rigidbody2D.velocity.y;
-		if (atLadder && vVelo == 0) {					// allows climbing if hero is not jumping/falling
-			rigidbody2D.isKinematic = true;				// disable gravity to allow static Y-axis movement
-			rigidbody2D.velocity = new Vector2(0, 0);	// cancel any current velocity
+		if (atLadder && vVelo == 0) {					    // allows climbing if hero is not jumping/falling
+			rigidbody2D.isKinematic = true;					// disable gravity to allow static Y-axis movement
+			rigidbody2D.velocity = new Vector2(0, 0);		// cancel any current velocity
 			player.anim.SetBool("Climbing", true);
 			if (vMove > 0) {
 				transform.Translate (Vector2.up * vSpeed * Time.deltaTime);
+			} else if (atLadderEnd && grounded) {
+				StopClimb();
 			} else {
 				transform.Translate (-Vector2.up * vSpeed * Time.deltaTime);
 			}
