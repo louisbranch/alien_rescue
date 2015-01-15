@@ -78,7 +78,7 @@ public class PlayerControl : MonoBehaviour {
 		string name = coll.gameObject.name;
 		if (name == "Ladder") {
 			atLadder = false;
-			rigidbody2D.gravityScale = 1;
+			rigidbody2D.isKinematic = false;
 			player.anim.SetBool("Climbing", false);		
 		}
 	}
@@ -86,7 +86,7 @@ public class PlayerControl : MonoBehaviour {
 	private void Climb (float vMove) {
 		float vVelo = rigidbody2D.velocity.y;
 		if (atLadder && vVelo == 0) {					// allows climbing if hero is not jumping/falling
-			rigidbody2D.gravityScale = 0;				// disable gravity to allow static Y-axis movement
+			rigidbody2D.isKinematic = true;				// disable gravity to allow static Y-axis movement
 			rigidbody2D.velocity = new Vector2(0, 0);	// cancel any current velocity
 			player.anim.SetBool("Climbing", true);
 			if (vMove > 0) {
